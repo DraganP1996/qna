@@ -14,8 +14,8 @@
         <button *ngIf="!edit" (click)="submitQuestion()" [disabled]="form.invalid" class="btn btn-primary">Add</button>
         <button *ngIf="!!edit && edit.editMode" (click)="editQuestion()" [disabled]="form.invalid"
           class="btn btn-primary">Edit</button>
-        <button *ngIf="!!edit && edit.editMode" (click)="exitFromEditMode()" [disabled]="form.invalid"
-          class="btn btn-primary">Exit from edit mode</button>
+        <button *ngIf="!!edit && edit.editMode" (click)="exitFromEditMode()" class="btn btn-primary">Exit from edit
+          mode</button>
 
       </form>
     </div>
@@ -30,10 +30,12 @@
           <div class="list-group-item__header">
             <strong> {{ question.question }} </strong>
             <span class="spacer"></span>
-            <button (click)="deleteQuestion(question._id)" [disabled]="lockedIds.includes(question._id)" class="btn btn-danger btn-sm ml-1">Delete</button>
+            <button (click)="deleteQuestion(question._id)" [disabled]="lockedIds.includes(question._id)"
+              class="btn btn-danger btn-sm ml-1">Delete</button>
             <button (click)="showAnswer(question._id)" class="btn btn-outline-primary btn-sm ml-1">{{ expandedSettings
               && expandedSettings[question._id] ? 'Hide Answer' : 'Show Answer'}} </button>
-            <button (click)="switchToEditMode(question)" [disabled]="lockedIds.includes(question._id)" class="btn btn-outline-primary btn-sm ml-1">Edit</button>
+            <button (click)="switchToEditMode(question)" [disabled]="lockedIds.includes(question._id)"
+              class="btn btn-outline-primary btn-sm ml-1">Edit</button>
           </div>
           <div *ngIf="expandedSettings[question._id]" class="list-group-item__answer">
             {{ question.answer }}
