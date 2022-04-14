@@ -1,0 +1,45 @@
+<div class="container-sm">
+  <h3 class="mb-5">Welcome to our support management</h3>
+  <div class="row mb-5">
+    <div class="col-12">
+      <form [formGroup]="form">
+        <div class="mb-3">
+          <label for="exampleInputQ" class="form-label">Question</label>
+          <input formControlName="question" type="text" class="form-control" aria-describedby="qHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputQ" class="form-label">Answer</label>
+          <textarea formControlName="answer" class="form-control" aria-describedby="aHelp" rows="3"></textarea>
+        </div>
+        <button *ngIf="!edit" (click)="submitQuestion()" [disabled]="form.invalid" class="btn btn-primary">Add</button>
+        <button *ngIf="!!edit && edit.editMode" (click)="editQuestion()" [disabled]="form.invalid"
+          class="btn btn-primary">Edit</button>
+        <button *ngIf="!!edit && edit.editMode" (click)="exitFromEditMode()" [disabled]="form.invalid"
+          class="btn btn-primary">Exit from edit mode</button>
+
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row mb-5">
+    <div class="col-12">
+      <ul class="list-group">
+        <li *ngFor="let question of questions" class="list-group-item">
+          <div class="list-group-item__header">
+            <strong> {{ question.question }} </strong>
+            <span class="spacer"></span>
+            <button (click)="deleteQuestion(question._id)" class="btn btn-danger btn-sm ml-1">Delete</button>
+            <button (click)="showAnswer(question._id)" class="btn btn-outline-primary btn-sm ml-1">{{ expandedSettings
+              && expandedSettings[question._id] ? 'Hide Answer' : 'Show Answer'}} </button>
+            <button (click)="switchToEditMode(question)" [disabled]="lockedIds.includes(question._id)" class="btn btn-outline-primary btn-sm ml-1">Edit</button>
+          </div>
+          <div *ngIf="expandedSettings[question._id]" class="list-group-item__answer">
+            {{ question.answer }}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

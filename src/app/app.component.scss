@@ -1,0 +1,14 @@
+.list-group-item {
+
+    &__header {
+        display: flex;
+    }
+
+    .spacer {
+        flex: 1 0 auto;
+    }
+}
+
+button {
+    margin-left: 5px;
+}
