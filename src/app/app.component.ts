@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Question, QuestionEditSettings, QuestionExpandedSettings } from './question.model';
 import { QuestionsService } from './questions.service';
@@ -29,6 +29,13 @@ export class AppComponent implements OnInit {
     private _questionGrup: QuestionGroup) 
     {
     this.form = this._questionGrup.createQuestionForm();
+  }
+
+  @HostListener('window:beforeunload')
+  unLockBeforeUnloadPage() {
+    if (!!this.edit) {
+      this._questionService.unlockQuestion(this.edit.questionId)
+    }
   }
 
   ngOnInit() {
@@ -76,7 +83,7 @@ export class AppComponent implements OnInit {
 
   switchToEditMode(question: Question): void {
     if (!!this.edit) {
-      this._questionService.unlockQuestionWhildeEditing(this.edit.questionId)
+      this._questionService.unlockQuestion(this.edit.questionId)
     }
 
     this.edit = {
@@ -84,7 +91,7 @@ export class AppComponent implements OnInit {
       questionId: question._id
     };
     this._questionGrup.setEditForm(question);
-    this._questionService.lockQuestionWhildeEditing(question._id);
+    this._questionService.lockQuestionWhileEditing(question._id);
   }
 
   editQuestion(): void {
@@ -109,7 +116,7 @@ export class AppComponent implements OnInit {
   exitFromEditMode(): void {
     this.form.reset();
     this.form.get('order').patchValue(0);
-    this._questionService.unlockQuestionWhildeEditing(this.edit.questionId);
+    this._questionService.unlockQuestion(this.edit.questionId);
 
     delete this.edit;
   }

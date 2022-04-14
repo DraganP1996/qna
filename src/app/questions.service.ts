@@ -49,11 +49,19 @@ export class QuestionsService {
     return this._http.delete<Question>(environment.apiURL+'questions/delete/'+id);
   }
 
-  lockQuestionWhildeEditing(id: string): void {
+  /**
+   * Lock a question with a specific id to unable other users to edit it
+   * @param id 
+   */
+  lockQuestionWhileEditing(id: string): void {
     this._socket.emit('lockEditForQuestion', id);
   }
 
-  unlockQuestionWhildeEditing(id: string): void {
+  /**
+   * Unlock question for other users
+   * @param id 
+   */
+  unlockQuestion(id: string): void {
     this._socket.emit('unlockEditForQuestion', id);
   }
 }
